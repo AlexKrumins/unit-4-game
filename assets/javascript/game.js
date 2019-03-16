@@ -5,10 +5,24 @@ $(document).ready(function() {
     var characterSelected = false;
     var villainSelected = false;
     var firstattack = 0;
-    
+    pushCharacters();
     //push character objects to array//
     function pushCharacters() {
         characterArray.push(pikachu, squirtle, bulbasaur, charmander);
+    };
+    
+    function youWin() {
+        if (characterArray.length === 0 && mainCharacter.hp > 0){
+            return  true;
+        }
+            return false;
+    };
+    
+    function stillAlive(obj) {
+        if (obj.hp > 0) {
+            return true;
+        } 
+            return false;
     };
 
     var pikachu = {
@@ -53,22 +67,10 @@ $(document).ready(function() {
     // };
     if (!playerselected) {
         for (var i = 0; i < characterArray.length; i++) {
-            
+            $("#character-selection").append();
         };
             
-        });
+        };
     }
-    function stillAlive(obj) {
-        if (obj.hp > 0) {
-            return true;
-        } 
-            return false;
-    };
 
-    function youWin() {
-        if (characterArray.length === 0 && mainCharacter.hp > 0){
-            return  true;
-        }
-            return false;
-    };
 }
