@@ -4,12 +4,35 @@ $(document).ready(function() {
     var characterArray = []//characters in the game
     var characterSelected = false;
     var villainSelected = false;
+<<<<<<< HEAD
     var firstattack = 0;//beggining stat that will grow as game progresses
     
+=======
+    var firstattack = 0;
+    pushCharacters();
+>>>>>>> e862a7f5fc3c453d31733a3c8ac695f8ecf74f23
     //push character objects to array//
     function pushCharacters() {
         characterArray.push(pikachu, squirtle, bulbasaur, charmander);
     };
+<<<<<<< HEAD
+=======
+    
+    function youWin() {
+        if (characterArray.length === 0 && mainCharacter.hp > 0){
+            return  true;
+        }
+            return false;
+    };
+    
+    function stillAlive(obj) {
+        if (obj.hp > 0) {
+            return true;
+        } 
+            return false;
+    };
+
+>>>>>>> e862a7f5fc3c453d31733a3c8ac695f8ecf74f23
     var pikachu = {
         name: "pikachu",
         hp:"100",
@@ -46,6 +69,7 @@ $(document).ready(function() {
     //     counter: "30",
     //     image: "assets/images/jigglypuff.png",
     // };
+<<<<<<< HEAD
     function showCharacters() {
         for (var c = 0; c < characterArray.length; c++) {
             $("#character-selection").append(characterArray[i].image,"<br>", characterArray[i].name, "<br>", characterArray[i].hp);
@@ -96,3 +120,14 @@ $(document).ready(function() {
         };
         function newGame() {};//starts new game
     }
+=======
+    if (!playerselected) {
+        for (var i = 0; i < characterArray.length; i++) {
+            $("#character-selection").append();
+        };
+            
+        };
+    }
+
+}
+>>>>>>> e862a7f5fc3c453d31733a3c8ac695f8ecf74f23
