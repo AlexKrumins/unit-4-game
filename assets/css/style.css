@@ -21,3 +21,14 @@
   .character-health {
     text-align: center;
   }
+
+  button {
+      opacity: 0;
+  }
+
+  #arena {
+      opacity: 0;
+      background-image: url(/assets/images/arena.jpg);
+      background-position: left top;
+      background-size: 100%;
+  }

@@ -73,6 +73,7 @@ $(document).ready(function() {
                         $("#prompt").text("Click the 'ATTACK' button to damage your opponent.");
                         $("#villain").html('<h3>Your Enemy</h3>').append("<br>", this);
                         $("#villainHP").append("HP: " + villain.hp);
+                        $("#attack").fadeTo(1,1);
                         // $("#character-selection").detach();
                     };
                 };
@@ -86,6 +87,7 @@ $(document).ready(function() {
                         $("#prompt").text("Choose your opponent!");
                         $("#main-character").html('<h3>Your Combatant</h3>').append("<br>", this);
                         $("#main-characterHP").append("HP: " + mainCharacter.hp);
+                        $("#arena").fadeTo(1,1);
 
                     };
                 };

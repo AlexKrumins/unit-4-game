@@ -6,24 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pokemon RPG</title>
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     </head>
 <body>
-    <h1>Generic RolePlayingGame</h1>
-    <h2>Special "Extra Generic" Edition</h2>
-    <h3 id="prompt"></h3>
-    <div id="character-selection"></div>
-    <div id="arena">
-        <div id="main-character"></div>
-        <div id="main-characterHP"></div>
-        <!-- <div id="enemy-selection"></div> -->
-        <button id="attack">ATTACK!</button>
-        <div id="villain"></div>
-        <div id="villainHP"></div>
+    <div class="row">
+        <div class="col-8">
+            <h1>Generic RolePlayingGame</h1>
+            <h2>Special "Extra Generic" Edition</h2>
+            <div id="character-selection"></div>
+            <h3 id="prompt"></h3>
+        </div>
+        <div class="col">
+            <div id="arena">
+                <div id="main-character"></div>
+                <div id="main-characterHP"></div>
+                <!-- <div id="enemy-selection"></div> -->
+                <button id="attack">ATTACK!</button>
+                <div id="villain"></div>
+                <div id="villainHP"></div>
+            </div>
+            <div id="standby"></div>
+            <p id="battle-readout"></p>
+        </div>
     </div>
-    <div id="standby"></div>
-    <p id="battle-readout"></p>
-    <button id="new-game">New Game</button>
+        <!-- <button id="new-game">New Game</button> -->
     
     <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
     </script>
