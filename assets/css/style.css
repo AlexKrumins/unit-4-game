@@ -1,12 +1,13 @@
 .character {
-    width: 200px;
-    margin: 0px 20px 10px 20px;
+    width: 240px;
+    align-content: center;
+    margin: 5px;
     cursor: pointer;
     display: inline;
   }
   .character img {
-    border: 0 none;
-    display: inline;
+    margin: 5px;
+    /* display: inline; */
     margin-left: auto;
     margin-right: auto;
     height: 200px;
@@ -22,13 +23,32 @@
     text-align: center;
   }
 
-  button {
-      opacity: 0;
-  }
+button {
+  opacity: 0;
+  cursor: pointer;
 
-  #arena {
-      opacity: 0;
-      background-image: url(/assets/images/arena.jpg);
-      background-position: left top;
-      background-size: 100%;
-  }
+}
+@font-face {
+  font-family: pokemon;
+  src: url(/assets/font/Pokemon-Solid.ttf)
+}
+body {
+  background-color: #4db56a;
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  color: white;
+  text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+#arena {  
+  margin: 20px;
+  opacity: 0;
+  background-image: url(/assets/images/arena.jpg);
+  background-position: center;
+  /* background-position: left top; */
+  background-size: 90%;
+  background-repeat: no-repeat;
+}
