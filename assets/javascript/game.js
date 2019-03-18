@@ -121,14 +121,16 @@ $(document).ready(function() {
     function villainvschardmg() {
         mainCharacter.hp -= villain.counter;
         $("#battle-readout").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
-    }
+    };
     
     function stillAlive() {
         if (this.hp > 0) {
             return true;
-        } 
+        } else {
         return false;
-    }
+        };
+    };
+
     function youWin() {
         if (characterArray.length === 0 && mainCharacter.hp > 0 && villain.hp < 0){
             return  true;
@@ -138,7 +140,7 @@ $(document).ready(function() {
 
     $("#attack-btn").on("click", function () {
         console.log("BRICK WALL");
-        if (stillAlive(mainCharacter) && stillAlive(villain)) {
+        if ((mainCharacter.hp >0) && (villain.hp > 0)) {
             console.log("Nothing returns");
             charvsvillaindmg();
             increaseAttack();
@@ -168,7 +170,8 @@ $(document).ready(function() {
                     });
                 };
             };
-        }
+        };
+        console.log("Bookend");
     });
     
-})
+});
