@@ -14,14 +14,14 @@ $(document).ready(function() {
     var pikachu = {
         name: "pikachu",
         hp:100,
-        attack: 5,
+        attack: 10,
         counter: 10,
         image: "<img src='./assets/images/pikachu.png'/>",
     };
     var squirtle = {
         name: "squirtle",
         hp:110,
-        attack: 6,
+        attack: 9,
         counter: 15,
         image: "<img src='./assets/images/squirtle.png'/>",
         
@@ -29,7 +29,7 @@ $(document).ready(function() {
     var bulbasaur = {
         name: "bulbasaur",
         hp:120,
-        attack: 4,
+        attack: 6,
         counter: 20,
         image: "<img src='./assets/images/bulbasaur.png'/>",
     };
@@ -68,6 +68,7 @@ $(document).ready(function() {
             if (characterSelected && !villainSelected && (this.id != mainCharacter.name)) {
                 $("#battle-readout").text("");
                 $("#villainHP").text("");
+                $("#main-characterHP").text("HP: " + mainCharacter.hp);
                 for (var j = 0; j < characterArray.length; j++) {
                     if (characterArray[j].name == (this).id) {
                         villain = characterArray[j];
@@ -140,23 +141,33 @@ $(document).ready(function() {
             charvsvillaindmg();
             if (villain.hp <0) {
                 $("#battle-readout").append("<br><br>" + villain.name.charAt(0).toUpperCase() + villain.name.slice(1) + " has fainted!");
-                $("#villainHP").text("FAINTED!");
+                if (characterArray.length > 0) {
+                    $("#battle-readout").append("<br><br> Continue to the next round?");
+                    $("#villainHP").text("FAINTED!");
+                } else {
+                    $("#battle-readout").append("<br><br> Congratulations on your hard-fought victory!");
+                    $("#your-enemy").text("You have defeated");
+                    $("#villainHP").text("EVERYONE!");
+                }
                 $("#main-characterHP").text("SUCCESS!");
                 $("#villain").children().remove();
                 $("#prompt").text("Pick another enemy to battle...");
                 villainSelected = false;
                 if (youWin()) {
-                    alert("Congratulations! You are a true pokemon master. All our base are belong to you");            }
+                    alert("Congratulations! You are a true pokemon master. All our base are belong to you");
                     $("#prompt").text("Try again to make sure it wasn't blind luck.");
                     $("#attack-btn").text("Restart Game");
                     $("#attack-btn").on("click", function () { // restarts game
                         location.reload();
                     });
-            } else 
+                };
+            } else {
             villainvschardmg();
+            };
             if (mainCharacter.hp < 0) {
-                $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
-                $("#prompt").text("Try again...");
+                $("#main-characterHP").text("FAINTED!");
+                $("#prompt").text("Please, try again...You can still be the very best.")
+                $("#battle-readout").append("<br><br>Despite their best efforts, " + mainCharacter.name + " has taken too much damage...<br>try again?");
                 $("#attack-btn").text("Restart Game");
                 $("#attack-btn").on("click", function () { // restarts game
                     location.reload();
