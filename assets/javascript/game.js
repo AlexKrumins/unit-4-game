@@ -139,31 +139,34 @@ $(document).ready(function() {
     $("#attack").on("click", function () {
         if (stillAlive(mainCharacter) && stillAlive(villain)) {
             charvsvillaindmg();
+            console.log(y);
             increaseAttack(mainCharacter);
-            villainvschardmg(villain);
-            $("#main-characterHP").text("HP: " + player.healthPoints);
-            $("#villainHP").text("HP: " + villain.healthPoints);
             if (!stillAlive(villain)) {
                 $("#villainHP").text("FAINTED!");
                 $("#main-characterHP").text("SUCCESS!");
+                $("#villain").children().remove();
                 $("#prompt").text("Pick another enemy to battle...");
-            }
-            if (!stillAlive(mainCharacter)) {
-                $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
-                $("#prompt").text("Try again...");
-                $("#attack").text("Restart Game");
-                $("#attack").on("click", function () { // restarts game
-                    document.reload();
-                });
-            }
-        }
-        if (!stillAlive(villain)) {
-            $("#villain").children().remove();
-            $("#villain").text("");
-            $("#villainHP").text("");
-            villainSelected = false;
-            if (youWin()) {
-                alert("Congratulations! You are a true pokemon master. All our base are belong to you");            }
+                villainSelected = false;
+                if (youWin()) {
+                    alert("Congratulations! You are a true pokemon master. All our base are belong to you");            }
+                    $("#prompt").text("Try again to make sure it wasn't blind luck.");
+                    $("#attack").text("Restart Game");
+                    $("#attack").on("click", function () { // restarts game
+                        document.reload();
+                    });
+            } else {
+                villainvschardmg();
+                $("#main-characterHP").text("HP: " + player.healthPoints);
+                $("#villainHP").text("HP: " + villain.healthPoints);
+                if (!stillAlive(mainCharacter)) {
+                    $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
+                    $("#prompt").text("Try again...");
+                    $("#attack").text("Restart Game");
+                    $("#attack").on("click", function () { // restarts game
+                        document.reload();
+                    });
+                };
+            };
         }
     });
     
