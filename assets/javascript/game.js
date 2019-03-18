@@ -66,6 +66,8 @@ $(document).ready(function() {
         $(".character").click( function() {
             //if player has selected a character, this will pick the opponent from the character array
             if (characterSelected && !villainSelected && (this.id != mainCharacter.name)) {
+                $("#battle-readout").text("");
+                $("#villainHP").text("");
                 for (var j = 0; j < characterArray.length; j++) {
                     if (characterArray[j].name == (this).id) {
                         villain = characterArray[j];
@@ -107,22 +109,24 @@ $(document).ready(function() {
     function increaseAttack() {
         firstattack += mainCharacter.attack;
     };
-
+    
     //main character attacks
     function charvsvillaindmg() {
         villain.hp -= firstattack;
         $("#battle-readout").text("You hit " + villain.name + " for " + firstattack + 
         " damage. It's SUPER EFFECTIVE!");
+        $("#villainHP").text("HP: " + villain.hp);
     };
-
+    
     //enemy counter attacks
     function villainvschardmg() {
         mainCharacter.hp -= villain.counter;
         $("#battle-readout").append("<br><br>" + villain.name.charAt(0).toUpperCase() + villain.name.slice(1) + " attacked you for " + villain.counter + " damage.");
+        $("#main-characterHP").text("HP: " + mainCharacter.hp);
     };
     
     function youWin() {
-        if (characterArray.length === 0 && mainCharacter.hp > 0 && villain.hp < 0){
+        if (characterArray.length == 0 && mainCharacter.hp > 0 && villain.hp < 0){
             return  true;
         }
         return false;
@@ -135,6 +139,7 @@ $(document).ready(function() {
             increaseAttack();
             charvsvillaindmg();
             if (villain.hp <0) {
+                $("#battle-readout").append("<br><br>" + villain.name.charAt(0).toUpperCase() + villain.name.slice(1) + " has fainted!");
                 $("#villainHP").text("FAINTED!");
                 $("#main-characterHP").text("SUCCESS!");
                 $("#villain").children().remove();
@@ -147,10 +152,8 @@ $(document).ready(function() {
                     $("#attack-btn").on("click", function () { // restarts game
                         location.reload();
                     });
-            };
+            } else 
             villainvschardmg();
-            $("#main-characterHP").text("HP: " + mainCharacter.hp);
-            $("#villainHP").text("HP: " + villain.hp);
             if (mainCharacter.hp < 0) {
                 $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
                 $("#prompt").text("Try again...");
