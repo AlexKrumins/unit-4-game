@@ -96,29 +96,28 @@ $(document).ready(function() {
                 };
             
             };
-            console.log(characterArray);
         });
              
-    function setfirstattack(obj) {
-        firstattack = obj.attack;
+    function setfirstattack() {
+        firstattack = mainCharacter.attack;
     };
     
     //increases attack power
-    mainCharacter.prototype.increaseAttack = function() {
+    function increaseAttack() {
         this.attack += firstattack;
     };
 
     //main character attacks
-    mainCharacter.prototype.attack = function () {
-        villain.hp -= this.attackPower;
+    function charvsvillaindmg() {
+        villain.hp -= this.attack;
         $("#battle-readout").html("You hit " + villain.name + " for " + mainCharacter.attack + 
         " damage. It's SUPER EFFECTIVE");
         mainCharacter.increaseAttack();
     };
 
     //enemy counter attacks
-    villain.prototype.counter = function () {
-        mainCharacter -= this.counter;
+    function villainvschardmg() {
+        mainCharacter.hp -= this.counter;
         $("#battle-readount").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
     }
     
@@ -137,8 +136,9 @@ $(document).ready(function() {
 
     $("#attack").on("click", function () {
         if (stillAlive(mainCharacter) && stillAlive(villain)) {
-            mainCharacter.attack();
-            villain.counter(mainCharacter);
+            increaseAttack(mainCharacter);
+            charvsvillaindmg(mainCharacter);
+            villainvschardmg(villain);
             $("#main-characterHP").text("HP: " + player.healthPoints);
             $("#villainHP").text("HP: " + villain.healthPoints);
             if (!stillAlive(villain)) {
@@ -155,7 +155,7 @@ $(document).ready(function() {
                 });
             }
         }
-        if (!isAlive(villain)) {
+        if (!stillAlive(villain)) {
             $("#villain").children().remove();
             $("#villain").text("");
             $("#villainHP").text("");
