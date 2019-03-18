@@ -59,7 +59,7 @@ $(document).ready(function() {
             $("#character-selection" + " div:last-child").append(characterArray[k].image).attr("id", characterArray[k].name);
             $("#character-selection" + " div:last-child").attr("class", 'character');
             $("#character-selection" + " idv:last-child").append();
-            // $("#character-selection" + " div:last-child").append(characterArray[k].name + "<br>");
+            villain// $("#character-selection" + " div:last-child").append(characterArray[k].name + "<br>");
         };
     };
 
@@ -71,8 +71,8 @@ $(document).ready(function() {
                         characterArray.splice(j, 1);
                         villainSelected = true;
                         $("#prompt").text("Click the 'ATTACK' button to damage your opponent.");
-                        $("#villain").html('<h3>Your Enemy</h3>').append("<br>", this);
-                        $("#villainHP").append("HP: " + villain.hp);
+                        $("#villain").append("<br>", this);
+                        $("#villainHP").html('<h3>Your Enemy</h3>').append("HP: " + villain.hp);
                         $("#attack").fadeTo(1,1);
                         // $("#character-selection").detach();
                     };
@@ -85,8 +85,7 @@ $(document).ready(function() {
                         characterArray.splice(i,1);
                         characterSelected = true;
                         $("#prompt").text("Choose your opponent!");
-                        $("#main-character").html('<h3>Your Combatant</h3>').append("<br>", this);
-                        $("#main-characterHP").append("HP: " + mainCharacter.hp);
+                        $("#main-character").html('<h3>Your Combatant</h3><h3>HP: ' + mainCharacter.hp).append("<br>", this);
                         $("#arena").fadeTo(1,1);
 
                     };
@@ -111,4 +110,39 @@ $(document).ready(function() {
         }
         return false;
     };
+
+    $("#attack").on("click", function () {
+        if (stillAlive(mainCharacter) && stillAlive(villain)) {
+            player.attack();
+            villain.counterAttack(player);
+            $("#pl ayerHealthDiv").html("HP: " + player.healthPoints);
+            $("#villainHealthDiv").html("HP: " + villain.healthPoints);
+            if (!isAlive(villain)) {
+                $("#villainHealthDiv").html("DEFETED!");
+                $("#playerHealthDiv").html("Enemy defeated!");
+                $("#msg").html("Pick another enemy to battle...");
+            }
+            if (!isAlive(player)) {
+                $("#playerHealthDiv").html("YOU LOST!");
+                $("#msg").html("Try again...");
+                $("#attackBtn").html("Restart Game");
+                $(document).on("click", "#attackBtn", function () { // restarts game
+                    location.reload();
+                });
+            }
+        }
+        if (!isAlive(villain)) {
+            $("#defenderDiv").removeClass("animated zoomInRight");
+            $("#defenderHealthDiv").removeClass("animated zoomInRight");
+            $("#defenderDiv").children().remove();
+            $("#defenderDiv").html("");
+            $("#defenderHealthDiv").html("");
+            defenderSelected = false;
+            if (isWinner()) {
+                $("#secondScreen").hide();
+                $("#globalMsg").show();
+            }
+        }
+    });
+    
 })
