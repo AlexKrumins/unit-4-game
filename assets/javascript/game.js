@@ -75,7 +75,7 @@ $(document).ready(function() {
                         $("#villain").append("<br>", this);
                         $("#your-enemy").text('Your Enemy')
                         $("#villainHP").append("HP: " + villain.hp);
-                        $("#attack").fadeTo(1,1);
+                        $("#attack-btn").fadeTo(1,1);
                         // $("#character-selection").detach();
                     };
                 };
@@ -112,7 +112,7 @@ $(document).ready(function() {
     //main character attacks
     function charvsvillaindmg() {
         villain.hp -= firstattack;
-        $("#battle-readout").html("You hit " + villain.name + " for " + mainCharacter.attack + 
+        $("#battle-readout").text("You hit " + villain.name + " for " + mainCharacter.attack + 
         " damage. It's SUPER EFFECTIVE");
         mainCharacter.increaseAttack();
     };
@@ -120,7 +120,7 @@ $(document).ready(function() {
     //enemy counter attacks
     function villainvschardmg() {
         mainCharacter.hp -= villain.counter;
-        $("#battle-readount").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
+        $("#battle-readout").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
     }
     
     function stillAlive() {
@@ -136,11 +136,12 @@ $(document).ready(function() {
         return false;
     };
 
-    $("#attack").on("click", function () {
+    $("#attack-btn").on("click", function () {
+        console.log("BRICK WALL");
         if (stillAlive(mainCharacter) && stillAlive(villain)) {
+            console.log("Nothing returns");
             charvsvillaindmg();
-            console.log(y);
-            increaseAttack(mainCharacter);
+            increaseAttack();
             if (!stillAlive(villain)) {
                 $("#villainHP").text("FAINTED!");
                 $("#main-characterHP").text("SUCCESS!");
@@ -150,8 +151,8 @@ $(document).ready(function() {
                 if (youWin()) {
                     alert("Congratulations! You are a true pokemon master. All our base are belong to you");            }
                     $("#prompt").text("Try again to make sure it wasn't blind luck.");
-                    $("#attack").text("Restart Game");
-                    $("#attack").on("click", function () { // restarts game
+                    $("#attack-btn").text("Restart Game");
+                    $("#attack-btn").on("click", function () { // restarts game
                         document.reload();
                     });
             } else {
@@ -161,8 +162,8 @@ $(document).ready(function() {
                 if (!stillAlive(mainCharacter)) {
                     $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
                     $("#prompt").text("Try again...");
-                    $("#attack").text("Restart Game");
-                    $("#attack").on("click", function () { // restarts game
+                    $("#attack-btn").text("Restart Game");
+                    $("#attack-btn").on("click", function () { // restarts game
                         document.reload();
                     });
                 };
