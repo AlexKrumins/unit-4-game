@@ -112,15 +112,15 @@ $(document).ready(function() {
     //main character attacks
     function charvsvillaindmg() {
         villain.hp -= firstattack;
-        $("#battle-readout").text("You hit " + villain.name + " for " + mainCharacter.attack + 
-        " damage. It's SUPER EFFECTIVE");
-        mainCharacter.increaseAttack();
+        $("#battle-readout").text("You hit " + villain.name + " for " + firstattack + 
+        " damage. It's SUPER EFFECTIVE!");
+        increaseAttack();
     };
 
     //enemy counter attacks
     function villainvschardmg() {
         mainCharacter.hp -= villain.counter;
-        $("#battle-readout").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
+        $("#battle-readout").append("<br>" + villain.name.charAt(0).toUpperCase() + villain.name.slice(1) + " attacked you for " + villain.counter + " damage.");
     };
     
     function stillAlive() {
@@ -144,7 +144,7 @@ $(document).ready(function() {
             console.log("Nothing returns");
             charvsvillaindmg();
             increaseAttack();
-            if (!stillAlive(villain)) {
+            if (villain.hp <0) {
                 $("#villainHP").text("FAINTED!");
                 $("#main-characterHP").text("SUCCESS!");
                 $("#villain").children().remove();
@@ -159,8 +159,8 @@ $(document).ready(function() {
                     });
             } else {
                 villainvschardmg();
-                $("#main-characterHP").text("HP: " + player.healthPoints);
-                $("#villainHP").text("HP: " + villain.healthPoints);
+                $("#main-characterHP").text("HP: " + mainCharacter.hp);
+                $("#villainHP").text("HP: " + villain.hp);
                 if (!stillAlive(mainCharacter)) {
                     $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
                     $("#prompt").text("Try again...");
