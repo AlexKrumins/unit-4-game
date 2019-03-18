@@ -72,7 +72,8 @@ $(document).ready(function() {
                         villainSelected = true;
                         $("#prompt").text("Click the 'ATTACK' button to damage your opponent.");
                         $("#villain").append("<br>", this);
-                        $("#villainHP").html('<h3>Your Enemy</h3>').append("HP: " + villain.hp);
+                        $("#your-enemy").text('Your Enemy')
+                        $("#villainHP").append("HP: " + villain.hp);
                         $("#attack").fadeTo(1,1);
                         // $("#character-selection").detach();
                     };
@@ -85,21 +86,44 @@ $(document).ready(function() {
                         characterArray.splice(i,1);
                         characterSelected = true;
                         $("#prompt").text("Choose your opponent!");
-                        $("#main-character").html('<h3>Your Combatant</h3><h3>HP: ' + mainCharacter.hp).append("<br>", this);
+                        $("#your-combatant").append("Your Combatant");
+                        $("#main-characterHP").append('HP: ' + mainCharacter.hp)
+                        $("#main-character").append("<br>", this);
                         $("#arena").fadeTo(1,1);
+                        setfirstattack();
 
                     };
                 };
             
             };
             console.log(characterArray);
-        });     
+        });
+             
     function setfirstattack(obj) {
         firstattack = obj.attack;
     };
     
-    function stillAlive(obj) {
-        if (obj.hp > 0) {
+    //increases attack power
+    mainCharacter.prototype.increaseAttack = function() {
+        this.attack += firstattack;
+    };
+
+    //main character attacks
+    mainCharacter.prototype.attack = function () {
+        villain.hp -= this.attackPower;
+        $("#battle-readout").html("You hit " + villain.name + " for " + mainCharacter.attack + 
+        " damage. It's SUPER EFFECTIVE");
+        mainCharacter.increaseAttack();
+    };
+
+    //enemy counter attacks
+    villain.prototype.counter = function () {
+        mainCharacter -= this.counter;
+        $("#battle-readount").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
+    }
+    
+    function stillAlive() {
+        if (this.hp > 0) {
             return true;
         } 
         return false;
@@ -113,35 +137,31 @@ $(document).ready(function() {
 
     $("#attack").on("click", function () {
         if (stillAlive(mainCharacter) && stillAlive(villain)) {
-            player.attack();
-            villain.counterAttack(player);
-            $("#pl ayerHealthDiv").html("HP: " + player.healthPoints);
-            $("#villainHealthDiv").html("HP: " + villain.healthPoints);
-            if (!isAlive(villain)) {
-                $("#villainHealthDiv").html("DEFETED!");
-                $("#playerHealthDiv").html("Enemy defeated!");
-                $("#msg").html("Pick another enemy to battle...");
+            mainCharacter.attack();
+            villain.counter(mainCharacter);
+            $("#main-characterHP").text("HP: " + player.healthPoints);
+            $("#villainHP").text("HP: " + villain.healthPoints);
+            if (!stillAlive(villain)) {
+                $("#villainHP").text("FAINTED!");
+                $("#main-characterHP").text("SUCCESS!");
+                $("#prompt").text("Pick another enemy to battle...");
             }
-            if (!isAlive(player)) {
-                $("#playerHealthDiv").html("YOU LOST!");
-                $("#msg").html("Try again...");
-                $("#attackBtn").html("Restart Game");
-                $(document).on("click", "#attackBtn", function () { // restarts game
-                    location.reload();
+            if (!stillAlive(mainCharacter)) {
+                $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
+                $("#prompt").text("Try again...");
+                $("#attack").text("Restart Game");
+                $("#attack").on("click", function () { // restarts game
+                    document.reload();
                 });
             }
         }
         if (!isAlive(villain)) {
-            $("#defenderDiv").removeClass("animated zoomInRight");
-            $("#defenderHealthDiv").removeClass("animated zoomInRight");
-            $("#defenderDiv").children().remove();
-            $("#defenderDiv").html("");
-            $("#defenderHealthDiv").html("");
-            defenderSelected = false;
-            if (isWinner()) {
-                $("#secondScreen").hide();
-                $("#globalMsg").show();
-            }
+            $("#villain").children().remove();
+            $("#villain").text("");
+            $("#villainHP").text("");
+            villainSelected = false;
+            if (youWin()) {
+                alert("Congratulations! You are a true pokemon master. All our base are belong to you");            }
         }
     });
     
