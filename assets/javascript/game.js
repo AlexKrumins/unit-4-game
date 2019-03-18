@@ -92,7 +92,6 @@ $(document).ready(function() {
                         $("#main-characterHP").append('HP: ' + mainCharacter.hp)
                         $("#main-character").append("<br>", this);
                         $("#arena").fadeTo(1,1);
-                        setfirstattack();
 
                     };
                 };
@@ -100,13 +99,13 @@ $(document).ready(function() {
             };
         });
              
-    function setfirstattack() {
-        firstattack = mainCharacter.attack;
-    };
+    // function setfirstattack() {
+    //     firstattack = mainCharacter.attack;
+    // };
     
     //increases attack power
     function increaseAttack() {
-        mainCharacter.attack += firstattack;
+        firstattack += mainCharacter.attack;
     };
 
     //main character attacks
@@ -114,23 +113,14 @@ $(document).ready(function() {
         villain.hp -= firstattack;
         $("#battle-readout").text("You hit " + villain.name + " for " + firstattack + 
         " damage. It's SUPER EFFECTIVE!");
-        increaseAttack();
     };
 
     //enemy counter attacks
     function villainvschardmg() {
         mainCharacter.hp -= villain.counter;
-        $("#battle-readout").append("<br>" + villain.name.charAt(0).toUpperCase() + villain.name.slice(1) + " attacked you for " + villain.counter + " damage.");
+        $("#battle-readout").append("<br><br>" + villain.name.charAt(0).toUpperCase() + villain.name.slice(1) + " attacked you for " + villain.counter + " damage.");
     };
     
-    function stillAlive() {
-        if (this.hp > 0) {
-            return true;
-        } else {
-        return false;
-        };
-    };
-
     function youWin() {
         if (characterArray.length === 0 && mainCharacter.hp > 0 && villain.hp < 0){
             return  true;
@@ -142,8 +132,8 @@ $(document).ready(function() {
         console.log("BRICK WALL");
         if ((mainCharacter.hp >0) && (villain.hp > 0)) {
             console.log("Nothing returns");
-            charvsvillaindmg();
             increaseAttack();
+            charvsvillaindmg();
             if (villain.hp <0) {
                 $("#villainHP").text("FAINTED!");
                 $("#main-characterHP").text("SUCCESS!");
@@ -155,21 +145,21 @@ $(document).ready(function() {
                     $("#prompt").text("Try again to make sure it wasn't blind luck.");
                     $("#attack-btn").text("Restart Game");
                     $("#attack-btn").on("click", function () { // restarts game
-                        document.reload();
+                        location.reload();
                     });
-            } else {
-                villainvschardmg();
-                $("#main-characterHP").text("HP: " + mainCharacter.hp);
-                $("#villainHP").text("HP: " + villain.hp);
-                if (!stillAlive(mainCharacter)) {
-                    $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
-                    $("#prompt").text("Try again...");
-                    $("#attack-btn").text("Restart Game");
-                    $("#attack-btn").on("click", function () { // restarts game
-                        document.reload();
-                    });
-                };
             };
+            villainvschardmg();
+            $("#main-characterHP").text("HP: " + mainCharacter.hp);
+            $("#villainHP").text("HP: " + villain.hp);
+            if (mainCharacter.hp < 0) {
+                $("#main-characterHP").text("Your Pokemon Has fainted. Game Over.");
+                $("#prompt").text("Try again...");
+                $("#attack-btn").text("Restart Game");
+                $("#attack-btn").on("click", function () { // restarts game
+                    location.reload();
+                });
+            };
+        
         };
         console.log("Bookend");
     });
