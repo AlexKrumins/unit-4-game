@@ -20,24 +20,24 @@ $(document).ready(function() {
     };
     var squirtle = {
         name: "squirtle",
-        hp:"110",
-        attack: "6",
-        counter: "15",
+        hp:110,
+        attack: 6,
+        counter: 15,
         image: "<img src='./assets/images/squirtle.png'/>",
         
     };
     var bulbasaur = {
         name: "bulbasaur",
-        hp:"120",
-        attack: "4",
-        counter: "20",
+        hp:120,
+        attack: 4,
+        counter: 20,
         image: "<img src='./assets/images/bulbasaur.png'/>",
     };
     var charmander = {
         name: "charmander",
-        hp:"130",
-        attack: "12",
-        counter: "12",
+        hp:130,
+        attack: 12,
+        counter: 12,
         image: "<img src='assets/images/charmander.png'/>",
     };
     // var jigglypuff = {
@@ -59,11 +59,12 @@ $(document).ready(function() {
             $("#character-selection" + " div:last-child").append(characterArray[k].image).attr("id", characterArray[k].name);
             $("#character-selection" + " div:last-child").attr("class", 'character');
             $("#character-selection" + " idv:last-child").append();
-            villain// $("#character-selection" + " div:last-child").append(characterArray[k].name + "<br>");
+            // $("#character-selection" + " div:last-child").append(characterArray[k].name + "<br>");
         };
     };
 
         $(".character").click( function() {
+            //if player has selected a character, this will pick the opponent from the character array
             if (characterSelected && !villainSelected && (this.id != mainCharacter.name)) {
                 for (var j = 0; j < characterArray.length; j++) {
                     if (characterArray[j].name == (this).id) {
@@ -79,7 +80,8 @@ $(document).ready(function() {
                     };
                 };
             }
-            if (!characterSelected) {//if the player has not selected a character, show all of the characters
+            //if the player has not selected a character, this action picks it
+            if (!characterSelected) {
                 for (var i = 0; i < characterArray.length; i++) {
                     if (characterArray[i].name == (this).id) {
                         mainCharacter = characterArray[i];
@@ -104,12 +106,12 @@ $(document).ready(function() {
     
     //increases attack power
     function increaseAttack() {
-        this.attack += firstattack;
+        mainCharacter.attack += firstattack;
     };
 
     //main character attacks
     function charvsvillaindmg() {
-        villain.hp -= this.attack;
+        villain.hp -= firstattack;
         $("#battle-readout").html("You hit " + villain.name + " for " + mainCharacter.attack + 
         " damage. It's SUPER EFFECTIVE");
         mainCharacter.increaseAttack();
@@ -117,7 +119,7 @@ $(document).ready(function() {
 
     //enemy counter attacks
     function villainvschardmg() {
-        mainCharacter.hp -= this.counter;
+        mainCharacter.hp -= villain.counter;
         $("#battle-readount").append("<br>" + villain.name + " attacked you for " + villain.counter + " damage.");
     }
     
@@ -128,7 +130,7 @@ $(document).ready(function() {
         return false;
     }
     function youWin() {
-        if (characterArray.length === 0 && mainCharacter.hp > 0){
+        if (characterArray.length === 0 && mainCharacter.hp > 0 && villain.hp < 0){
             return  true;
         }
         return false;
@@ -136,8 +138,8 @@ $(document).ready(function() {
 
     $("#attack").on("click", function () {
         if (stillAlive(mainCharacter) && stillAlive(villain)) {
+            charvsvillaindmg();
             increaseAttack(mainCharacter);
-            charvsvillaindmg(mainCharacter);
             villainvschardmg(villain);
             $("#main-characterHP").text("HP: " + player.healthPoints);
             $("#villainHP").text("HP: " + villain.healthPoints);
