@@ -38,7 +38,7 @@ body {
 #arena {  
   margin: 10px;
   opacity: 0;
-  background-image: url(/assets/images/arena_vectorized.png);
+  background-image: url(./assets/images/arena_vectorized.png);
   background-position: center;
   /* background-position: left top; */
   background-size: 90%;
